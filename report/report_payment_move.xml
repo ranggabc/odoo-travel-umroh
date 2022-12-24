@@ -1,0 +1,197 @@
+<odoo>
+
+
+    <!-- Report Template Header - Customer Invoice -->
+
+    <template id="header_payment_invoice">
+        <div class="header text-center">
+            <h1>CUSTOMER INVOICE</h1>
+        </div>
+    </template>
+
+
+    <!-- Report Template Body - Customer Invoice -->
+
+    <template id="body_payment_invoice">
+        <div class="page">
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Customer</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Addres</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.city"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Mobile</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.mobile"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">No</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.payment_reference"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Tanggal</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-if="o.invoice_date">
+                                    <t t-esc="o.invoice_date.strftime('%d %B %Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table table-bordered mt-2">
+                <thead style="color:black;font-weight: bold;font-weight: bold;">
+                    <tr>
+                        <td class="text-center">Product</td>
+                        <td class="text-center">Qty</td>
+                        <td class="text-center">Price Unit</td>
+                        <td class="text-center">Sub Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.invoice_line_ids" t-as="invoice">
+                        <tr>
+                            <td class="text-center">
+                                <t t-esc="invoice.product_id.name"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="invoice.quantity"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="invoice.price_unit"/>
+                            </td>
+                            <td class="text-right">
+                                <t t-esc="invoice.price_subtotal"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+                <tfoot style="color:black;font-weight: bold;font-weight: bold;">
+                    <tr>
+                        <td class="text-right" colspan="3">Total</td>
+                        <td class="text-right">
+                            <t t-esc="o.amount_total"/>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </template>
+
+    <template id="body_payment_widget">
+        <div class="page">
+            <table class="table table-bordered mt-2">
+                <thead style="color:black;font-weight: bold;font-weight: bold;">
+                    <tr>
+                        <td colspan="4" class="text-center">PAYMENT</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">Method</td>
+                        <td class="text-center">Amount</td>
+                        <td class="text-center">Tanggal</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.get_widget()" t-as="pay">
+                        <tr>
+                            <td class="text-center">
+                                <span t-esc="pay['journal_name']"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="time.strftime('%d %b %Y', time.strptime(pay['date'], '%Y-%m-%d'))"/>
+                            </td>
+                            <td class="text-right">
+                                <span t-esc="pay['amount']" t-option='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-right">
+                                <strong>Sisa</strong>
+                            </td>
+                            <td>
+                                <span t-field="o.amount_residual"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+
+
+    <!-- Report Template Footer - Customer Invoice -->
+
+    <template id="footer_invoice">
+        <table class="table table-bordered mt-0 w-25 mx-auto">
+            <thead style="color:black;font-weight: bold;font-weight: bold;">
+                <tr>
+                    <td class="text-center">Mengetahui</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 110px;">
+                    </td>
+                </tr>
+            </tbody>
+            <tfooter>
+                <tr>
+                    <td class="text-center">
+                        <t t-esc="o.env.user.name"/>
+                    </td>
+                </tr>
+            </tfooter>
+        </table>
+
+    </template>
+
+
+    <!-- Report Template - Customer Invoice -->
+
+    <template id="report_customer_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div t-if="report_type == 'html'">
+                    <div>
+                        <t t-call="ab_travel_umroh.header_payment_invoice"/>
+                    </div>
+                    <div style="margin-top:20px">
+                        <t t-call="ab_travel_umroh.body_payment_invoice"/>
+                        <t t-call="ab_travel_umroh.body_payment_widget"/>
+                    </div>
+                    <div style="margin-top:2px">
+                        <t t-call="ab_travel_umroh.footer_invoice"/>
+                    </div>
+                </div>
+                <div t-else="">
+                    <t t-call="ab_travel_umroh.header_payment_invoice"/>
+                    <t t-call="web.external_layout">
+                        <t t-call="ab_travel_umroh.body_payment_invoice"/>
+                        <t t-call="ab_travel_umroh.body_payment_widget"/>
+                        <t t-call="ab_travel_umroh.footer_invoice"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

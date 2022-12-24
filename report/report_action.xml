@@ -1,0 +1,44 @@
+<odoo>
+
+
+    <!-- Membuat Action/Event Report Print Delivery -->
+
+    <record id="report_delivery_order_action" model="ir.actions.report">
+        <field name="name">Print Delivery Order (PDF)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ab_travel_umroh.report_delivery</field>
+        <field name="report_file">ab_travel_umroh.report_delivery_order</field>
+        <field name="print_report_name">'Delivery Order - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+    <!-- Membuat Action/Event Report Cetak Invoice -->
+
+    <record id="report_payment_action" model="ir.actions.report">
+        <field name="name">Cetak Invoice</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ab_travel_umroh.report_customer_invoice</field>
+        <field name="report_file">ab_travel_umroh.report_payment_move</field>
+        <field name="print_report_name">'Invoice - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_account_move"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+    <!-- Membuat Action/Event Report Travel Package -->
+
+    <record id="report_travel_package_action" model="ir.actions.report">
+        <field name="name">Cetak Manifest</field>
+        <field name="model">travel.package</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ab_travel_umroh.report_package</field>
+        <field name="report_file">ab_travel_umroh.report_travel_package</field>
+        <field name="print_report_name">'Package - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_travel_package"/>
+        <field name="binding_view_types">form</field>
+    </record>
+
+
+</odoo>   

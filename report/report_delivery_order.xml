@@ -1,0 +1,142 @@
+<odoo>
+
+
+    <!-- Report Template Header - Delivery Order -->
+
+    <template id="header_delivery_order">
+        <div class="header text-center">
+            <h1>DELIVERY ORDER</h1>
+        </div>
+    </template>
+
+
+    <!-- Report Template Body - Delivery Order -->
+
+    <template id="body_delivery_order">
+        <div class="page">
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Customer</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Addres</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.city"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Mobile</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.partner_id.mobile"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered" style="width:50%">
+                    <tbody>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">No</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-esc="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;color:black;font-weight: bold;">Tanggal</td>
+                            <td style="width:75%;padding:5px;">
+                                <t t-if="o.scheduled_date">
+                                    <t t-esc="o.scheduled_date.strftime('%d %B %Y')"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table table-bordered mt-2">
+                <thead style="color:black;font-weight: bold;font-weight: bold;">
+                    <tr>
+                        <td class="text-center">Product</td>
+                        <td class="text-center">Qty</td>
+                        <td class="text-center">Unit of Measure</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="o.move_ids_without_package" t-as="product">
+                        <tr>
+                            <td>
+                                <t t-esc="product.product_id.name"/>
+                            </td>
+                            <td>
+                                <t t-esc="product.product_uom_qty"/>
+                            </td>
+                            <td>
+                                <t t-esc="product.product_uom.name"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <!-- Report Template Footer - Delivery Order -->
+
+    <template id="footer_delivery_order">
+        <table class="table table-bordered mt-2 w-25 mx-auto">
+            <thead style="color:black;font-weight: bold;font-weight: bold;">
+                <tr>
+                    <td class="text-center">Mengetahui</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 110px;">
+                    </td>
+                </tr>
+            </tbody>
+            <tfooter>
+                <tr>
+                    <td class="text-center">
+                        <t t-esc="o.env.user.name"/>
+                    </td>
+                </tr>
+            </tfooter>
+        </table>
+
+
+    </template>
+
+
+    <!-- Report Template - Delivery Order -->
+
+    <template id="report_delivery">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div t-if="report_type == 'html'">
+                    <div>
+                        <t t-call="ab_travel_umroh.header_delivery_order"/>
+                    </div>
+                    <div style="margin-top:20px">
+                        <t t-call="ab_travel_umroh.body_delivery_order"/>
+                    </div>
+                    <div style="margin-top:10px">
+                        <t t-call="ab_travel_umroh.footer_delivery_order"/>
+                    </div>
+                </div>
+                <div t-else="">
+                    <t t-call="ab_travel_umroh.header_delivery_order"/>
+                    <t t-call="web.external_layout">
+                        <t t-call="ab_travel_umroh.body_delivery_order"/>
+                        <t t-call="ab_travel_umroh.footer_delivery_order"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

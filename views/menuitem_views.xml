@@ -1,0 +1,48 @@
+<odoo>
+
+
+    <!-- Membuat Menu Dashboard -->
+
+    <menuitem id="menu_dashboard_travel_umroh" name="Travel Umroh" web_icon="ab_travel_umroh,static/description/icon.png"/>
+
+    <!-- Membuat Menu Bar Master Data -->
+
+    <menuitem id="menu_bar_travel_umroh" name="Master Data" parent="menu_dashboard_travel_umroh"/>
+
+    <!-- Membuat Menu Bar Transaction -->
+
+    <menuitem id="menu_tr_travel_umroh" name="Transaction" parent="menu_dashboard_travel_umroh"/>
+
+    <!-- Membuat Menu Item Produk -->
+
+    <menuitem id="menu_produk_travel_umroh" name="Produk" parent="menu_bar_travel_umroh" action="mrp.product_template_action"/>
+
+    <!-- Membuat Menu Item Paket Produk -->
+
+    <menuitem id="menu_paket_travel_umroh" name="Paket Produk" parent="menu_bar_travel_umroh" action="mrp.mrp_bom_form_action"/>
+
+    <!-- Membuat Menu Item Jamaah -->
+
+    <menuitem id="menu_jamaah_travel_umroh" name="Jamaah" parent="menu_bar_travel_umroh" action="jamaah_umroh_action"/>
+
+    <!-- Membuat Menu Item Arlines -->
+    <menuitem id="menu_airlines_travel_umroh" name="Airlines" parent="menu_bar_travel_umroh" action="airlinees_umroh_action"/>
+
+
+    <!-- Membuat Menu Item Hotels -->
+
+    <menuitem id="menu_hotels_travel_umroh" name="Hotels" parent="menu_bar_travel_umroh" action="hotels_umroh_action"/>
+
+    <!-- Membuat Menu Item Travel Package -->
+
+    <menuitem id="menu_package_travel_umroh" name="Travel Package" parent="menu_tr_travel_umroh" action="travel_package_action"/>
+
+    <!-- Membuat Menu Item Sale Order -->
+
+    <menuitem id="menu_sales_travel_umroh" name="Sale Order" parent="menu_tr_travel_umroh" action="sale.action_orders"/>
+
+    <!-- Membuat Menu Item Customer Invoice -->
+
+    <menuitem id="menu_invoice_travel_umroh" name="Customer Invoice" parent="menu_tr_travel_umroh" action="account.action_move_out_invoice_type"/>
+
+</odoo>

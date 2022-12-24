@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+package_user,package.user,model_travel_package,group_travel_umroh,1,1,1,1
+component_user,component.user,model_component_line,group_travel_umroh,1,1,1,1
+hotels_user,hotels.user,model_hotels_line,group_travel_umroh,1,1,1,1
+airlines_user,airlines.user,model_airlines_line,group_travel_umroh,1,1,1,1
+schedule_user,schedule.user,model_schedule_line,group_travel_umroh,1,1,1,1
+manifest_user,manifest.user,model_manifest_line,group_travel_umroh,1,1,1,1

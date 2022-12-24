@@ -1,0 +1,186 @@
+<odoo>
+    <data>
+
+        <!-- Membuat View Tree/List Manifest Sale Order -->
+
+        <record id="manifest_sale_view_tree" model="ir.ui.view">
+            <field name="name">manifest.sale.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='customer_signature']" position="after">
+                    <page string="Manifest">
+                        <field name="manifest_line" mode="tree,kanban" nolabel="1">
+                            <tree string="Manifest">
+                                <field name="title" readonly="0"/>
+                                <field name="partner_id"/>
+                                <field name="jenis_kelamin"/>
+                                <field name="no_ktp"/>
+                                <field name="no_passpor"/>
+                                <field name="tanggal_lahir"/>
+                                <field name="tempat_lahir"/>
+                                <field name="tanggal_berlaku"/>
+                                <field name="tanggal_expired"/>
+                                <field name="nama_imigrasi"/>
+                                <field name="tipe_kamar"/>
+                                <field name="umur"/>
+                                <field name="mahrom_id"/>
+                                <field name="users_id"/>
+                            </tree>
+                            <form string='Manifest'>
+                                <group string="Personal" col="4">
+                                    <field name="title"/>
+                                    <field name="no_ktp"/>
+                                    <field name="partner_id"/>
+                                    <field name="mahrom_id"/>
+                                    <field name="tipe_kamar"/>
+                                    <field name="umur"/>
+                                    <field name="tanggal_lahir"/>
+                                    <field name="tempat_lahir"/>
+                                </group>
+                                <group string="Passport" col="4">
+                                    <field name="no_passpor"/>
+                                    <field name="tanggal_berlaku"/>
+                                    <field name="nama_imigrasi"/>
+                                    <field name="nama_passport"/>
+                                    <field name="tanggal_expired"/>
+                                    <field name="notes"/>
+                                </group>
+                                <group string="Scan Document" col="4">
+                                    <field name="scanner_passpor" widget="image"/>
+                                    <field name="scanner_buku_nikah" widget="image"/>
+                                    <field name="scanner_KTP" widget="image"/>
+                                    <field name="scanner_kartu_keluarga" widget="image"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Membuat View Form Jamaah -->
+
+        <record id="jamaah_res_partner_view_form" model="ir.ui.view">
+            <field name="name">res.partner.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="after">
+                    <group string="Additional Information" col="4">
+                        <field name="ktp" placeholder="Nomor Kartu Penduduk"/>
+                        <field name="gender" placeholder="Masukan Jenis Kelamin"/>
+                        <field name="ayah" placeholder="Masukan Nama Ayah"/>
+                        <field name="ibu" placeholder="Masukan Nama Ibu"/>
+                        <field name="pekerjaan_ayah" placeholder="Masukan Pekerjaan Ayah"/>
+                        <field name="pekerjaan_ibu" placeholder="Masukan Pekerjaan Ibu"/>
+                        <field name="tempat" placeholder="Masukan Tempat Lahir"/>
+                        <field name="tanggal" placeholder="Masukan Tanggal Lahir"/>
+                        <field name="pendidikan" placeholder="Pendidikan Terakhir"/>
+                        <field name="golongan_darah" placeholder="Masukan Golongan Darah"/>
+                        <field name="status" placeholder="Status Pernikahan"/>
+                        <field name="ukuran" placeholder="Masukan Ukuran Baju"/>
+                    </group>
+                    <group string="Passpor Information" col="4">
+                        <field name="passpor" placeholder="Masukan Nomor Passpor"/>
+                        <field name="nama_passpor" placeholder="Masukan Nama Passpor"/>
+                        <field name="berlaku"/>
+                        <field name="expired"/>
+                        <field name="imigrasi" placeholder="Masukan Cabang Imigrasi"/>
+                    </group>
+                    <group string="Scan Document" col="4">
+                        <field name="scan_passpor" widget="image"/>
+                        <field name="scan_buku_nikah" widget="image"/>
+                        <field name="scan_KTP" widget="image"/>
+                        <field name="scan_kartu_keluarga" widget="image"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Membuat Action/Event Jamaah -->
+
+        <record id="jamaah_umroh_action" model="ir.actions.act_window">
+            <field name="name">Jamaah</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,kanban</field>
+        </record>
+
+        <!-- Membuat Checkbox Hotel & Airline -->
+
+        <record id="airlines_res_partner_view_form" model="ir.ui.view">
+            <field name="name">airlines.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='misc']" position="after">
+                    <group name="travel" string="Travel">
+                        <field name="airline"></field>
+                        <field name="hotel"></field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Membuat Filter Airplane & Hotels -->
+
+        <record id="filter_airplane_res_partner_view_form" model="ir.ui.view">
+            <field name="name">filter.airplane.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <filter name="type_person" position="after">
+                    <filter name="airlinees" string="Airlines"/>
+                    <filter name="hoteeels" string="Hotels"/>
+                </filter>
+            </field>
+        </record>
+
+        <!-- Membuat Action Airlines -->
+
+        <record id="airlinees_umroh_action" model="ir.actions.act_window">
+            <field name="name">Airlines</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('airline', '=', True)]</field>
+            <field name="context">{'search_default_airlinees':1, 'default_airline':True}</field>
+        </record>
+
+        <!-- Membuat Action Hotels -->
+
+        <record id="hotels_umroh_action" model="ir.actions.act_window">
+            <field name="name">Hotels</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('hotel', '=', True)]</field>
+            <field name="context">{'search_default_hoteeels':1, 'default_hotel': True}</field>
+        </record>
+
+        <!-- Membuat Paket Perjalanan Pada Sale Order -->
+
+        <record id="sale_order_view_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="package_id"></field>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Membuat Button Print PDF Sales Order -->
+
+        <record id="stock_picking_view_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='do_print_picking']" position="before">
+                    <button name="print_delivery" type="object" attrs="{'invisible': [('state', '!=', 'done')]}" string="Print Delivery" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
